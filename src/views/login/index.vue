@@ -62,7 +62,8 @@ import { useRouter, useRoute } from 'vue-router'
 export default defineComponent({
   name: 'login',
   setup() {
-    const { ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
+    //注意：原始项目，直接按照说明运行，会死在登录，不能运行下去。需要把ctx修改位proxy
+    const { proxy } = getCurrentInstance() // 可以把ctx当成vue2中的this
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
@@ -97,7 +98,7 @@ export default defineComponent({
             state.loading = true
             const { code, data, message } = await Login(state.model)
             if (+code === 200) {
-              ctx.$message.success({
+              proxy.$message.success({
                 message: '登录成功',
                 duration: 1000,
               })
@@ -114,7 +115,7 @@ export default defineComponent({
               }
               store.commit('app/setToken', data)
             } else {
-              ctx.$message.error(message)
+              proxy.$message.error(message)
             }
             state.loading = false
           }

@@ -93,7 +93,7 @@ export default defineComponent({
     Avatar,
   },
   setup() {
-    const { ctx } = getCurrentInstance()
+    const { proxy } = getCurrentInstance()
     const store = useStore()
     const router = useRouter()
     const route = useRoute()
@@ -147,7 +147,7 @@ export default defineComponent({
         // 尝试获取用户信息
         !store.state.account.userinfo && store.dispatch('account/getUserinfo')
       } else {
-        ctx.$message('您的账号已退出，请直接登录')
+        proxy.$message('您的账号已退出，请直接登录')
         reLogin()
       }
     }
